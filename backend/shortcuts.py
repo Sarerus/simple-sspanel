@@ -17,6 +17,7 @@ def gen_config(model: ProxyNode):
                     "email": account.uuid, # UUID
                     "id": account.uuid, # UUID
                     "level": account.level,
+                    # "security": "auto", # default auto
                     "alterId": 0
                 }
             )

@@ -1,7 +1,7 @@
 from django.http import HttpResponseNotFound, JsonResponse
-from django.shortcuts import render
 from backend.models import ProxyNode
 from backend.shortcuts import gen_config
+
 
 # Create your views here.
 def get_config(request):

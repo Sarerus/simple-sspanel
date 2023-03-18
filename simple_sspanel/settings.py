@@ -24,7 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default=None)
-print(SECRET_KEY)
 if SECRET_KEY is None or SECRET_KEY == '':
     SECRET_KEY = 'django-insecure-' + get_random_secret_key()
     with open('.env', 'w+') as f:
@@ -46,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'core',
     'backend',
+    'sspanel',
 ]
 
 MIDDLEWARE = [

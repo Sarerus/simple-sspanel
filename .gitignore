@@ -1,0 +1,12 @@
+# Python virtual envirment
+.venv
+
+# Python cache files
+__pycache__
+*.pyc
+
+# Project envirment config
+.env
+
+# SQLite3 default database file
+db.sqlite3

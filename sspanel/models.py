@@ -7,7 +7,7 @@ from core.models import Base
 class Account(Base):
 
     # foreign system user
-    account = models.ForeignKey(
+    account = models.OneToOneField(
         User, 
         on_delete=models.CASCADE, 
         verbose_name=_('System Account'))

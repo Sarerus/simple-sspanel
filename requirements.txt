@@ -1,2 +1,5 @@
 Django==4.1.7
 python-decouple==3.8
+v2client==1.1.1
+celery==5.2.7
+django-celery-beat==2.5.0

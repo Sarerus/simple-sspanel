@@ -10,3 +10,7 @@ __pycache__
 
 # SQLite3 default database file
 db.sqlite3
+
+# IDE folders
+.vscode
+.idea

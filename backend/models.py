@@ -1,8 +1,8 @@
 from django.db import models
 from decimal import Decimal
 from django.utils.translation import gettext as _
-from django.contrib.auth.models import User
 from core.models import Base
+from sspanel.models import Account
 
 # Base class for all nodes
 class Node(Base):
@@ -86,12 +86,13 @@ class ProxyNode(Node):
         verbose_name_plural = _("Proxy Node")
 
 
-class UserTraffic(Base):
-    # foreign system user
-    user = models.ForeignKey(
-        User, 
+class AccountTraffic(Base):
+
+    # foreign sspanel account
+    account = models.ForeignKey(
+        Account, 
         on_delete=models.CASCADE, 
-        verbose_name=_('System User'))
+        verbose_name=_('sspanel account'))
 
     proxy_node = models.ForeignKey(
         ProxyNode,

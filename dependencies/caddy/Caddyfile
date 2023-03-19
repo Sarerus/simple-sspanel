@@ -1,0 +1,23 @@
+{$DOMAIN} {
+    handle /static/* {
+        root * /staticfiles
+        file_server
+    }
+
+    @ws {
+        path /websoket
+        header Connection *pgrade
+        header Upgrade *ebsocket
+    }
+    reverse_proxy @ws v2ray:8081
+
+    handle /api {
+        reverse_proxy web:8000
+    }
+
+    handle /admin {
+        reverse_proxy web:8000
+    }
+
+    root * /usr/share/caddy
+}

@@ -19,6 +19,6 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # communication with v2ray-core
-    path("api/backend/", include("backend.urls")),
+    # communication with v2ray-core, not open for internet
+    path("internal/", include("backend.urls")),
 ]

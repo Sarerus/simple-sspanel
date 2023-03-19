@@ -5,14 +5,12 @@ from backend.shortcuts import gen_config
 
 # Create your views here.
 def get_config(request):
-    token = request.GET.get('token')
-    if token is None:
-        return HttpResponseNotFound('')
-    proxynode, created = ProxyNode.objects.get_or_create(token=token)
+    node_address = request.META.get("REMOTE_ADDR")
+    if request.META.get('HTTP_X_FORWARDED_FOR'):
+        node_address = request.META.get("HTTP_X_FORWARDED_FOR")
+    proxynode, created = ProxyNode.objects.get_or_create(server=node_address)
     if created:
-        proxynode.server = request.META.get("REMOTE_ADDR")
-        if request.META.get('HTTP_X_FORWARDED_FOR'):
-            proxynode.server = request.META.get("HTTP_X_FORWARDED_FOR")
+        proxynode.confirmed = True
         proxynode.save()
     v2rayconfig = gen_config(proxynode)
     return JsonResponse(v2rayconfig)

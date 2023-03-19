@@ -3,3 +3,5 @@ python-decouple==3.8
 v2client==1.1.1
 celery==5.2.7
 django-celery-beat==2.5.0
+uvicorn==0.21.1
+gunicorn==20.1.0

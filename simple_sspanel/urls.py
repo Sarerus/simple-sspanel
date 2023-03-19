@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from sspanel.views import SubscribeView
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # communication with v2ray-core, not open for internet
     path("internal/", include("backend.urls")),
+
+    # sspanel 
+    path("api/subscribe", SubscribeView.as_view(), name='subscribe_url'),
 ]

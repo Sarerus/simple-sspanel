@@ -1,0 +1,48 @@
+# see full in  https://github.com/Hackl0us/SS-Rule-Snippet/wiki/clash(X)
+# port of HTTP
+port: 7890
+
+# port of SOCKS5
+socks-port: 7891
+
+allow-lan: false
+
+# Rule / Global/ DIRECT (default is Rule)
+mode: rule
+
+bind-address: "*"
+
+# set log level to stdout (default is info)
+# info / warning / error / debug
+log-level: info
+
+# A RESTful API for clash
+external-controller: 127.0.0.1:9090
+
+# Secret for RESTful API (Optional)
+secret: ""
+
+dns:
+  enable: false # set true to enable dns (default is false)
+  listen: 127.0.0.1:53
+  nameserver:
+     - 119.29.29.29
+     - 114.114.114.114
+  fallback: # concurrent request with nameserver, fallback used when GEOIP country isn't CN
+     - https://1.1.1.1/dns-query
+     - tls://1.0.0.1:853
+     - tls://dns.google:853
+
+proxies:
+
+proxy-groups:
+  - name: Auto Fast
+    type: "url-test"
+    url: "http://www.gstatic.cn/generate_204"
+    interval: 300
+    tolerance: 100
+    proxies: ''
+
+  - name: Proxy
+    type: "select"
+    proxies:

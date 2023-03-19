@@ -1,0 +1,66 @@
+rule-providers:
+  apple-proxy:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/Basic/Apple-proxy.yaml"
+    path: ./ruleset/Apple-proxy.yaml
+    interval: 86400
+
+  apple-direct:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/Basic/Apple-direct.yaml"
+    path: ./ruleset/Apple-direct.yaml
+    interval: 86400
+
+  cn:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/Basic/CN.yaml"
+    path: ./ruleset/CN.yaml
+    interval: 86400
+
+  ad-keyword:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/Basic/common-ad-keyword.yaml"
+    path: ./ruleset/common-ad-keyword.yaml
+    interval: 86400
+
+  foreign:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/Basic/foreign.yaml"
+    path: ./ruleset/foreign.yaml
+    interval: 86400
+
+  telegram:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/App/social/Telegram.yaml"
+    path: ./ruleset/Telegram.yaml
+    interval: 86400
+
+  lan:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@master/Rulesets/Clash/Basic/LAN.yaml"
+    path: ./ruleset/LAN.yaml
+    interval: 86400
+
+rules:
+  - RULE-SET,ad-keyword,REJECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,boss.cnwangjie.com,REJECT
+
+  - GEOIP,CN,DIRECT
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,lan,DIRECT
+  - RULE-SET,apple-direct,DIRECT
+
+  - RULE-SET,foreign,Proxy
+  - RULE-SET,telegram,Proxy
+  - RULE-SET,apple-proxy,Proxy
+
+  - MATCH,Final

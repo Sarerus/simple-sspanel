@@ -1,5 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
+from django.urls import reverse
+from django.utils.html import format_html
+from rest_framework.authtoken.models import Token
 from sspanel.models import Account
 
 
@@ -10,6 +13,7 @@ class AccountAdmin(admin.ModelAdmin):
         'user_username',
         'uuid',
         'level',
+        'subscribe_url',
         'remark',
         'create_time',
     ]
@@ -33,6 +37,18 @@ class AccountAdmin(admin.ModelAdmin):
         }
         ),
     ]
+
+    def get_queryset(self, request):
+        self.request = request      
+        return super().get_queryset(request)
+
+    @admin.display(description=_('Subscribe Url'))
+    def subscribe_url(self, obj):
+        token, _ = Token.objects.get_or_create(user=obj.user)
+        return format_html(
+            u'<a href="{}">{}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{}">{}</a>', 
+            f"{ reverse('subscribe_url') }?token={ token.key }&client=shadowrocket", 'shadowrocket', 
+            f"{ reverse('subscribe_url') }?token={ token.key }", 'clash')
 
     @admin.display(ordering='user__username', description=_('Username'))
     def user_username(self, obj):

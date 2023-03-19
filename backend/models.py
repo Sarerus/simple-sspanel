@@ -63,6 +63,12 @@ class ProxyNode(Node):
         _("Level"), 
         default=0)
 
+    # mirror node, etc. cdn domains
+    mirror = models.BooleanField(
+        _("Mirror"), 
+        default=False,
+        help_text=_('This node is the mirror image of other source nodes, but the domain name is different, please select'))
+
     # network traffic used
     traffic_used = models.BigIntegerField(
         _("traffic used"), 

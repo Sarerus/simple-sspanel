@@ -15,14 +15,17 @@ client = V2RayClient("v2ray", 8080)
 @shared_task
 def v2ray_add_user(email):
     # ADD VMESS USER
-    client.add_user(
-        inbound_tag="users",
-        proxy_type=v2types.ProxyTypes.VMESS,
-        email=email,
-        level=0,
-        security=v2types.VMessSecurityTypes.AUTO,
-        user_id=email
-    )
+    try:
+        client.add_user(
+            inbound_tag="users",
+            proxy_type=v2types.ProxyTypes.VMESS,
+            email=email,
+            level=0,
+            security=v2types.VMessSecurityTypes.AUTO,
+            user_id=email
+        )
+    except Exception as e:
+        logger.error(str(e))
 
 
 # delete user in nodes
@@ -30,7 +33,10 @@ def v2ray_add_user(email):
 @shared_task
 def v2ray_del_user(email):
     # ADD VMESS USER
-    client.remove_user(inbound_tag="users", email=email)
+    try:
+        client.remove_user(inbound_tag="users", email=email)
+    except Exception as e:
+        logger.error(str(e))
 
 
 # analysis all accounts

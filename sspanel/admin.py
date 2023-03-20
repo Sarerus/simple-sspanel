@@ -46,8 +46,7 @@ class AccountAdmin(admin.ModelAdmin):
     def subscribe_url(self, obj):
         token, _ = Token.objects.get_or_create(user=obj.user)
         return format_html(
-            u'<a href="{}">{}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{}">{}</a>', 
-            f"{ reverse('subscribe_url') }?token={ token.key }&client=shadowrocket", 'shadowrocket', 
+            u'<a href="{}">{}</a>', 
             f"{ reverse('subscribe_url') }?token={ token.key }", 'clash')
 
     @admin.display(ordering='user__username', description=_('Username'))

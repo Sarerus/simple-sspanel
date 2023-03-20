@@ -1,4 +1,4 @@
-# simple-sspanel
+# simple-sspanel  |  [中文](https://github.com/Sarerus/simple-sspanel/blob/main/docs/README_CN.md)
 
 The Internet is still strictly controlled in many areas of the world today. In order to resist illegal blocking and monitoring, peace-loving people in the world should act to protect our freedom of communication.
 

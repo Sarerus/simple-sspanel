@@ -74,10 +74,10 @@ class ProxyNode(Node):
         _("traffic used"), 
         default=0)
 
-    # The total available flow of the node, -1 is unlimited by default
+    # The total network traffic
     traffic_total = models.BigIntegerField(
         _("traffic total"), 
-        default=-1)
+        default=0)
 
     # network traffic weight
     traffic_weight = models.DecimalField(

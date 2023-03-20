@@ -1,0 +1,19 @@
+{$DOMAIN} {
+    handle_path /static* {
+        root * /staticfiles
+        file_server
+    }
+
+    reverse_proxy /api* web:8000
+
+    reverse_proxy /admin* web:8000
+
+    @ws {
+        path /websocket
+        header Connection *pgrade
+        header Upgrade *ebsocket
+    }
+    
+    reverse_proxy @ws v2ray:8081
+
+}

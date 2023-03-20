@@ -1,0 +1,64 @@
+version: "3.9"
+   
+services:
+
+  mq:
+    image: rabbitmq:alpine
+    restart: always
+
+  worker:
+    build: .
+    command: python -m celery -A simple_sspanel worker -l INFO
+    restart: always
+    volumes:
+      - .:/code
+    depends_on:
+      - mq
+
+  beat:
+    build: .
+    command: python -m celery -A simple_sspanel beat -l INFO
+    restart: always
+    volumes:
+      - .:/code
+    depends_on:
+      - mq
+
+  web:
+    build: .
+    restart: always
+    volumes:
+      - .:/code
+      - static_volume:/code/staticfiles
+    entrypoint: /entrypoint.sh
+    depends_on:
+      - mq
+
+  v2ray:
+    image: v2fly/v2fly-core:latest
+    restart: always
+    command: run -c /etc/v2ray/config.json
+    volumes:
+      - ./backend/assets/json/v2ray-config.json:/etc/v2ray/config.json
+    depends_on:
+      - web
+
+  front:
+    image: caddy:alpine
+    restart: always
+    volumes:
+      - ./dependencies/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - static_volume:/staticfiles
+      - caddy_data:/data
+    environment:
+      - DOMAIN=${DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+      - v2ray
+
+volumes:
+  static_volume:
+  caddy_data:

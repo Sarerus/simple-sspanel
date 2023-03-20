@@ -30,6 +30,7 @@ services:
     volumes:
       - .:/code
       - static_volume:/code/staticfiles
+    entrypoint: /entrypoint.sh
     depends_on:
       - mq
 

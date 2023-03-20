@@ -13,5 +13,3 @@ RUN pip install --no-cache-dir -U pip \
 WORKDIR /code
 
 EXPOSE 8000
-
-ENTRYPOINT [ "/entrypoint.sh" ]

@@ -17,3 +17,4 @@ db.sqlite3
 
 # Other files
 celerybeat-schedule
+staticfiles/*

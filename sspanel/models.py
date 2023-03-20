@@ -46,7 +46,7 @@ class Account(Base):
         default=0)
 
     def save(self, *args, **kwargs):
-        if not self.id and not self.user:
+        if not hasattr(self, 'user'):
             # create system user
             user = User.objects.create_user(
                 username=self.username, 
@@ -55,7 +55,7 @@ class Account(Base):
             self.user = user 
             # add v2ray user
             v2ray_add_user.delay(self.uuid)
-        elif self.id:
+        if self.id:
             # if change account uuid will update v2ray user
             before = Account.objects.filter(pk=self.id)
             if self.uuid != before.uuid:

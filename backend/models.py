@@ -56,6 +56,8 @@ class ProxyNode(Node):
     # V2ray-core request config with this token
     token = models.CharField(
         _("Token"), 
+        null=True,
+        blank=True,
         max_length=128)
 
     # node level

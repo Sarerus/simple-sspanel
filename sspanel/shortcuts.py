@@ -1,6 +1,7 @@
 from backend.models import ProxyNode
 from sspanel.models import Account
 from sspanel.types import ClientCategory
+from decouple import config
 
 import yaml
 import base64
@@ -14,9 +15,9 @@ def _generate_clash_config(account: Account):
         base_config = yaml.safe_load(f)
     proxies = [
         {
-            'name': node.name if node.name else node.server,
+            'name': node.name if node.name else config("DOMAIN"),
             'type': node.protocal,
-            'server': node.server,
+            'server': config("DOMAIN"),
             'port': 443,
             'tls': True,
             'uuid': str(account.uuid),
@@ -25,12 +26,12 @@ def _generate_clash_config(account: Account):
             'network': 'ws',
             'ws-path': '/websocket',
             'ws-headers': { 
-                'Host': node.server
+                'Host': config("DOMAIN")
             },
             'ws-opts': {
                 'path': '/websocket', 
                 'headers': { 
-                    'Host': node.server
+                    'Host': config("DOMAIN")
                 }
             }
         } for node in ProxyNode.objects.filter(confirmed=True, enable=True)
@@ -46,8 +47,8 @@ def _generate_shadowrocket_config(account: Account):
     raw_text = ''
     for node in ProxyNode.objects.filter(confirmed=True, enable=True):
         raw_text += 'vmess://'
-        raw_text += str(base64.b64encode(f'auto:{str(account.uuid)}@{node.server}:443'.encode('utf-8')),'utf-8')
-        raw_text += f'remarks={node.server}&obfsParam=%7B%22Host%22:%22{node.server}%22%7D&path=/websocket&obfs=websocket&tls=1&peer={node.server}&tfo=1&mux=1&alterId=0'
+        raw_text += str(base64.b64encode(f'auto:{str(account.uuid)}@{config("DOMAIN")}:443'.encode('utf-8')),'utf-8')
+        raw_text += f'remarks={config("DOMAIN")}&obfsParam=%7B%22Host%22:%22{config("DOMAIN")}%22%7D&path=/websocket&obfs=websocket&tls=1&peer={config("DOMAIN")}&tfo=1&mux=1&alterId=0'
         raw_text += '\n'
     return str(base64.b64encode(raw_text.encode('utf-8')),'utf-8')
 
